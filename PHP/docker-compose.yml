@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: acbr_php:latest
-    container_name: acbr_php
+    image: projetoacbr/acbrlib_php:latest
+    container_name: acbrlib_php
     restart: always
     ports:
       - "8000:80"

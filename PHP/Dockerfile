@@ -5,7 +5,7 @@ FROM php:8.4-apache
 # Projeto ACBr
 LABEL maintainer="ti@projetoacbr.com.br" \
       version="1.0" \
-      description="Imagem PHP Apache, com requisitos básicos para rodar os Demos da ACBrLib em PHP"
+      description="Imagem PHP Apache, com requisitos básicos para rodar os Demos da ACBrLib em PHP, usando a biblioteca FFI "
 
 #Diretorio padrão Apache onde fica os fontes do projeto WEB.
 WORKDIR /var/www/html/
