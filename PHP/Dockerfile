@@ -47,20 +47,19 @@ COPY openssl-legacy.cnf /etc/ssl/
 ENV OPENSSL_CONF=/etc/ssl/openssl-legacy.cnf
 RUN openssl list -providers
 
-
 ##################################################################################
 ###               Baixando ACBrLib DEMO para dentro do container               ###
 ### 1 - Para usar a versão PRO,                                                ### 
 ### 2 - Comente as linhas abaixo                                               ###
 ### 2 - Leia as intruções no próximo Bloco                                     ###  
 ##################################################################################
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrboleto64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrcep64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrconsultacnpj64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrgtin64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrmdfe64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfe64.so
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfse64.so
+RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrboleto64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrcep64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrconsultacnpj64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrgtin64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrmdfe64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfe64.so; \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfse64.so
 
 ##################################################################################
 ###               Copiando ACBrLib PRO para dentro do container                ###
@@ -97,16 +96,17 @@ RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Exemplos/ACBrDFe/Sc
 ### Copiando arquivos de Configuração, para facilitar a execução dos Demos ###
 COPY conf/ACBrCEP.INI ConsultaCEP/MT
 COPY conf/ACBrNFe.INI NFe/MT
+COPY conf/ACBrConsultaCNPJ.INI ConsultaCNPJ/MT
 
 # Criando Links Simbolicos nas pastas esperadas pelo Demo do ACBr em PHP 
 #  NOTA: provavelmente você não precisa disso, no seu Docker
-RUN ln -s /usr/lib/libacbrboleto64.so Boleto/MT/ACBrLib/x64/libacbrboleto64.so
-RUN ln -s /usr/lib/libacbrcep64.so ConsultaCEP/MT/ACBrLib/x64/libacbrcep64.so
-RUN ln -s /usr/lib/libacbrconsultacnpj64.so ConsultaCNPJ/MT/ACBrLib/x64/libacbrconsultacnpj64.so
-RUN ln -s /usr/lib/libacbrgtin64.so GTIN/MT/ACBrLib/x64/libacbrgtin64.so
-RUN ln -s /usr/lib/libacbrmdfe64.so MDFe/MT/ACBrLib/x64/libacbrmdfe64.so
-RUN ln -s /usr/lib/libacbrnfe64.so NFe/MT/ACBrLib/x64/libacbrnfe64.so
-RUN ln -s /usr/lib/libacbrnfse64.so NFSe/MT/ACBrLib/x64/libacbrnfse64.so
+RUN ln -s /usr/lib/libacbrboleto64.so Boleto/MT/ACBrLib/x64/libacbrboleto64.so; \
+    ln -s /usr/lib/libacbrcep64.so ConsultaCEP/MT/ACBrLib/x64/libacbrcep64.so; \
+    ln -s /usr/lib/libacbrconsultacnpj64.so ConsultaCNPJ/MT/ACBrLib/x64/libacbrconsultacnpj64.so; \
+    ln -s /usr/lib/libacbrgtin64.so GTIN/MT/ACBrLib/x64/libacbrgtin64.so; \
+    ln -s /usr/lib/libacbrmdfe64.so MDFe/MT/ACBrLib/x64/libacbrmdfe64.so; \
+    ln -s /usr/lib/libacbrnfe64.so NFe/MT/ACBrLib/x64/libacbrnfe64.so; \
+    ln -s /usr/lib/libacbrnfse64.so NFSe/MT/ACBrLib/x64/libacbrnfse64.so
 
 # Ajustando o Dono e Grupo dos arquivos em /var/www/html
 RUN chown -R www-data:www-data ./*
