@@ -18,8 +18,16 @@ Baixe e Instale o **Docker Desktop**
 https://www.docker.com/products/docker-desktop/
 
 # Como usar  Docker no Linux ?
+Baixe o script de instalação https://get.docker.com
 
-# Como Executar o Docker na Iternet ?
+Abra o terminal copie e cole os comandos:
+```sh
+wget  https://get.docker.com -O install-docker.sh
+sudo sh install-docker.sh
+```
+Instruções de pós-instalação: https://docs.docker.com/engine/install/linux-postinstall
+
+# Como Executar o Docker na Internet ?
 ## AWS
 ## Digital Ocean
 ## Hostgator
