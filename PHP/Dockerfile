@@ -12,8 +12,8 @@ WORKDIR /var/www/html/
 
 # Instalação dos pacotes basicos essenciais para o funcionamento do projeto, e depois limpa arquivos temporários. 
 # Para adicionar outros pacotes, veja o exemplo na linha comentada abaixo.
-RUN set -eux; \
-    apt-get update; \
+RUN set -eux && \
+    apt-get update && \
     apt-get install -y \
         subversion \
         wget \
@@ -24,8 +24,8 @@ RUN set -eux; \
         libssl-dev \
         vim \
         #<nome_do_pacote_extra> \
-    ; \
-    apt-get clean; \
+    && \
+    apt-get clean&& \
     rm -rf /var/lib/apt/lists/*   
 
 # Criando Links simbolicos das bibliotecas ".SO" necessarias, e com os nomes conforme esperado pelos Fontes do ACBr
@@ -47,37 +47,36 @@ COPY openssl-legacy.cnf /etc/ssl/
 ENV OPENSSL_CONF=/etc/ssl/openssl-legacy.cnf
 RUN openssl list -providers
 
+
 ##################################################################################
 ###               Baixando ACBrLib DEMO para dentro do container               ###
 ### 1 - Para usar a versão PRO,                                                ### 
 ### 2 - Comente as linhas abaixo                                               ###
 ### 2 - Leia as intruções no próximo Bloco                                     ###  
 ##################################################################################
-RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrboleto64.so; \
-    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrcep64.so; \
-    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrconsultacnpj64.so; \
-    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrgtin64.so; \
-    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrmdfe64.so; \
-    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfe64.so; \
+RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrboleto64.so && \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrcep64.so && \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrconsultacnpj64.so && \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrgtin64.so && \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrmdfe64.so && \
+    wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfe64.so && \
     wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrnfse64.so
 
-##################################################################################
-###               Copiando ACBrLib PRO para dentro do container                ###
-###                                                                            ###
-### 1 - Baixe as Bibliotecas PRO do Fórum do ACBr                              ###
-###     https://www.projetoacbr.com.br/forum/files/category/36-acbrlib-pro/    ### 
-### 2 - No Arquivo baixado, localize a Biblioteca na Pasta:                    ###
-###     Linux, CONSOLE-MT                                                      ###          
-### 3 - Copie as Biblioteca Pro, no diretorio 'libs/'                          ###
-### 4 - O comando abaixo, cuidará de copiar as novas Libs, no Conteiner        ###
-##################################################################################
-COPY libs/README.md libs/*.so /usr/lib/
+####################################################################################
+###               Copiando ACBrLib PRO para dentro do container                  ###
+###                                                                              ###
+### 1 - Baixe as Bibliotecas PRO do Fórum do ACBr                                ###
+###     https://www.projetoacbr.com.br/forum/files/category/36-acbrlib-pro/      ### 
+### 2 - No Arquivo baixado, localize a Biblioteca na Pasta:                      ###
+###     Linux, CONSOLE-MT                                                        ###          
+### 3 - Copie as Biblioteca Pro, no diretorio 'libs/' e descomente o COPY        ###
+### 4 - O comando abaixo, cuidará de copiar as novas Libs, no Conteiner          ###
+####################################################################################
+
+#COPY libs/*.so /usr/lib/
 
 ### Copiando os certificados, que foram informados na pasta cert/ ###
 COPY cert /var/www/html/cert/
-
-# Apagando arquivos desnecessários, gerados pelas operações acima 
-RUN rm /usr/lib/README.md
 
 ####################################
 ###  Instalando a aplicação PHP  ###
@@ -85,27 +84,25 @@ RUN rm /usr/lib/README.md
 # Substitua as linhas abaixo, pelas instruções de carga da SUA APLICAÇÃO PHP
 
 # Faz download dos fontes de demonstração PHP do ACBr para o diretorio do Apache, e remove pasta desnecessárias
-RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Projetos/ACBrLib/Demos/PHP/" ./; \
-    rm -rf VersoesSemFFI; \
-    rm -rf .svn
-
+RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Projetos/ACBrLib/Demos/PHP/" ./ && \
+    rm -rf VersoesSemFFI && \
+    rm -rf .svn && \
 # Faz download dos Schemas para o diretorio do Apache, e remove pasta desnecessárias
-RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Exemplos/ACBrDFe/Schemas/"; \
+    svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Exemplos/ACBrDFe/Schemas/" && \
     rm -rf Schemas/.svn
 
 ### Copiando arquivos de Configuração, para facilitar a execução dos Demos ###
 COPY conf/ACBrCEP.INI ConsultaCEP/MT
 COPY conf/ACBrNFe.INI NFe/MT
-COPY conf/ACBrConsultaCNPJ.INI ConsultaCNPJ/MT
 
 # Criando Links Simbolicos nas pastas esperadas pelo Demo do ACBr em PHP 
 #  NOTA: provavelmente você não precisa disso, no seu Docker
-RUN ln -s /usr/lib/libacbrboleto64.so Boleto/MT/ACBrLib/x64/libacbrboleto64.so; \
-    ln -s /usr/lib/libacbrcep64.so ConsultaCEP/MT/ACBrLib/x64/libacbrcep64.so; \
-    ln -s /usr/lib/libacbrconsultacnpj64.so ConsultaCNPJ/MT/ACBrLib/x64/libacbrconsultacnpj64.so; \
-    ln -s /usr/lib/libacbrgtin64.so GTIN/MT/ACBrLib/x64/libacbrgtin64.so; \
-    ln -s /usr/lib/libacbrmdfe64.so MDFe/MT/ACBrLib/x64/libacbrmdfe64.so; \
-    ln -s /usr/lib/libacbrnfe64.so NFe/MT/ACBrLib/x64/libacbrnfe64.so; \
+RUN ln -s /usr/lib/libacbrboleto64.so Boleto/MT/ACBrLib/x64/libacbrboleto64.so && \
+    ln -s /usr/lib/libacbrcep64.so ConsultaCEP/MT/ACBrLib/x64/libacbrcep64.so && \
+    ln -s /usr/lib/libacbrconsultacnpj64.so ConsultaCNPJ/MT/ACBrLib/x64/libacbrconsultacnpj64.so && \
+    ln -s /usr/lib/libacbrgtin64.so GTIN/MT/ACBrLib/x64/libacbrgtin64.so && \
+    ln -s /usr/lib/libacbrmdfe64.so MDFe/MT/ACBrLib/x64/libacbrmdfe64.so && \
+    ln -s /usr/lib/libacbrnfe64.so NFe/MT/ACBrLib/x64/libacbrnfe64.so && \
     ln -s /usr/lib/libacbrnfse64.so NFSe/MT/ACBrLib/x64/libacbrnfse64.so
 
 # Ajustando o Dono e Grupo dos arquivos em /var/www/html
