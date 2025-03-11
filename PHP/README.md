@@ -23,9 +23,9 @@ Acesse em seu navegador de preferência http://localhost:8080<br/>
 Será carregada a página inicial com os Links dos exemplos em PHP
 
 # Transformar o Docker em **ACBr PRO** 
-1. Link com informações da ACBr [../libs/README.md](../libs/README.md)
+1. Link com informações da ACBr PRO [../libs/README.md](../libs/README.md#versão-pro)
 2. Copie as bibliotecas para [../PHP/libs](../PHP/libs)
-3. Comente as linhas   [../PHP/Dockerfile](../PHP/Dockerfile)
+3. Comente as linhas   [Dockerfile](../PHP/Dockerfile)
 
 ```dockerfile
 RUN wget -P /usr/lib/ https://github.com/Projeto-ACBr-Oficial/Docker/raw/refs/heads/main/libs/libacbrboleto64.so && \
