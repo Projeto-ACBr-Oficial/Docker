@@ -24,7 +24,7 @@ Será carregada a página inicial com os Links dos exemplos em PHP
 
 # Transformar o Docker em **ACBr PRO** 
 1. Link com informações da ACBr PRO [../libs/README.md](../libs/README.md#versão-pro)
-2. Copie as bibliotecas para [../PHP/libs](../PHP/libs)
+2. Copie as bibliotecas ACBrLib PRO [../PHP/libs](../PHP/libs)
 3. Comente as linhas   [Dockerfile](../PHP/Dockerfile)
 
 ```dockerfile
