@@ -29,6 +29,10 @@ Instruções de pós-instalação: https://docs.docker.com/engine/install/linux-
 
 # Como Executar o Docker na Internet ?
 ## AWS
+Instruções para rodar docker na AWS https://aws.amazon.com/pt/getting-started/hands-on/deploy-docker-containers/
+
 ## Digital Ocean
+Instruções para para deploy na Digital Ocean https://docs.digitalocean.com/products/app-platform/how-to/deploy-from-container-images/
+
 ## Hostgator
 ## SaveInCloud
