@@ -65,7 +65,6 @@ COPY libs/*.so /usr/lib/
 
 
 ```dockerfile
-[Dockerfile](../PHP/Dockerfile)
 # Faz download dos fontes de demonstração PHP do ACBr para o diretorio do Apache, e remove pasta desnecessárias
 RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Projetos/ACBrLib/Demos/PHP/" ./ && \
     rm -rf VersoesSemFFI && \
