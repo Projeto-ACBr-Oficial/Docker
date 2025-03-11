@@ -1,10 +1,25 @@
 # Sobre o Docker **ACBr PHP**
-Explicação sucinta
-Links para Imagens do Docker em execução
-Links para Imagens da aplicação Demo rodando
+Docker ACBr PHP contém o contêiner com exemplos de aplicações PHP que usam a ACBrLib
+[Links para Imagens do Docker em execução](https://hub.docker.com/r/projetoacbr/acbrlib_php)
+
+Baixando a imagem do docker hub
+
+```sh
+docker pull projetoacbr/acbrlib_php
+```
+
 
 # Rodando o Docker **ACBr PHP**
-Explicação sucinta, pode fazer referência ao documento da Raiz
+Executando o projeto
+Obs.: a opção **-p** redireciona conexão do servidor (contêiner) para a porta 8080
+
+**-it** modo interativo 
+
+```sh
+docker run -p 8080:80 -it projetoacbr/acbrlib_php:latest
+```
+
+Acesse em seu navegador de preferência http://localhost:8080
 
 # Transformar o Docker em **ACBr PRO** 
 - Onde baixar as bibliotecas **Versão Pro**
