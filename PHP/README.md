@@ -84,4 +84,6 @@ COPY conf/ACBrNFe.INI NFe/MT
 docker-compose up --build
 ```
 
-- Explicação de como usar outro `php.ini`
+## Substuição do php.ini
+
+Caso seja necessário, é possível substituir o arquivo [php.ini](./php.ini) por outro.
