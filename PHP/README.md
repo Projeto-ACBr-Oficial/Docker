@@ -61,6 +61,27 @@ COPY libs/*.so /usr/lib/
 
 
 # Customizando o Docker para rodar a sua aplicação
-- Explicação sobre quais linhas editar no `DockerFile`
-- Explicação de como recompilar o Docker
+1. Substitua as linhas do [Dockerfile](../PHP/Dockerfile) pelas de sua aplicação
+
+
+```dockerfile
+[Dockerfile](../PHP/Dockerfile)
+# Faz download dos fontes de demonstração PHP do ACBr para o diretorio do Apache, e remove pasta desnecessárias
+RUN svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Projetos/ACBrLib/Demos/PHP/" ./ && \
+    rm -rf VersoesSemFFI && \
+    rm -rf .svn && \
+# Faz download dos Schemas para o diretorio do Apache, e remove pasta desnecessárias
+    svn checkout "https://svn.code.sf.net/p/acbr/code/trunk2/Exemplos/ACBrDFe/Schemas/" && \
+    rm -rf Schemas/.svn
+
+### Copiando arquivos de Configuração, para facilitar a execução dos Demos ###
+COPY conf/ACBrCEP.INI ConsultaCEP/MT
+COPY conf/ACBrNFe.INI NFe/MT
+```
+2. Recompilar sua aplicação usando o **docker-compose**, mais informações em https://docs.docker.com/compose/
+
+```sh
+docker-compose up --build
+```
+
 - Explicação de como usar outro `php.ini`
