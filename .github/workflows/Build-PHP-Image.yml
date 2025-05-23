@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - "PHP/**"
+  workflow_dispatch:  # <-- permite rodar manualmente
 
 jobs:
   build-and-push:
